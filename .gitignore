@@ -1,0 +1,15 @@
+# Ignore everything except the static website and its local assets.
+*
+!/.gitignore
+!/index.html
+
+!/web/
+!/web/app.js
+!/web/math.js
+!/web/styles.css
+!/web/vendor/
+!/web/vendor/katex/
+!/web/vendor/katex/katex.min.js
+!/web/vendor/katex/katex.min.css
+!/web/vendor/katex/fonts/
+!/web/vendor/katex/fonts/*.woff2
