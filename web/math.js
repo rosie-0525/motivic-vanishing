@@ -28,7 +28,11 @@
     if (mode === 'comparison') {
       if (j === 0) return {level: -2, hatched, reason: 'weight-zero'};
       const candidates = [];
-      if (lci) candidates.push({level: j - 1, reason: 'lci-weight'});
+      if (lci) {
+        candidates.push({level: j - 1, reason: 'lci-weight'});
+        // Corollary 6.9: k >= j+n-m, including codimension one.
+        candidates.push({level: d - p, reason: 'lci-upper'});
+      }
       if (p >= s + 2) candidates.push({level: Math.min(j - 1, d - p), reason: 'comparison'});
       if (normal && j === 1) candidates.push({level: 0, reason: 'normal'});
       if (lci && p + j < d - s) candidates.unshift({level: 0, reason: 'lci-codimension'});
@@ -43,10 +47,23 @@
     return {level, hatched, reason};
   }
   const visible = (result, m) => result.level === -2 || (result.level >= 0 && result.level <= m);
+  // A singular lci m-Du Bois variety must have n-s >= 2m+1.
+  // Keep the formal sufficient level in cell(), but do not color vacuous cases.
+  const levelLimit = (mode, state) => mode === 'comparison' && state.lci
+    ? Math.min(state.m, Math.floor((state.d - state.s - 1) / 2)) : state.m;
+  function boundary(mode, p, j, state) {
+    if (mode !== 'comparison' || !state.lci || j < 2 ||
+        visible(cell(mode, p, j, state), levelLimit(mode, state))) return '';
+    const injective = p + j === state.d - state.s;
+    const surjectiveLevel = state.d - p - 1;
+    const surjective = surjectiveLevel >= 0 && surjectiveLevel <= levelLimit(mode, state) && j >= surjectiveLevel + 2;
+    return injective && surjective ? 'I/S' : injective ? 'I' : surjective ? 'S' : '';
+  }
   function preset(page) {
     const variations = {
       1: {}, 2: {}, 3: {normal: true}, 4: {lci: true},
-      5: {s: 2}, 6: {mode: 'mot', normal: true}, 7: {mode: 'mot', normal: true, s: 2}
+      5: {s: 2}, 6: {mode: 'mot', normal: true}, 7: {mode: 'mot', normal: true, s: 2},
+      8: {lci: true, s: 5, m: 0}
     };
     return normalize({...DEFAULTS, ...variations[page]});
   }
@@ -61,7 +78,7 @@
   function toHash(state) {
     return new URLSearchParams(Object.entries(state).map(([key, value]) => [key, typeof value === 'boolean' ? Number(value) : value])).toString();
   }
-  const api = {DEFAULTS, normalize, cell, visible, preset, fromHash, toHash};
+  const api = {DEFAULTS, normalize, cell, visible, levelLimit, boundary, preset, fromHash, toHash};
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else root.Motivic = api;
 })(typeof globalThis === 'undefined' ? this : globalThis);

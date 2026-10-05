@@ -19,15 +19,17 @@
 
   function describe(mode, p, j) {
     const result = M.cell(mode, p, j, state), k = p + j;
-    const shown = M.visible(result, state.m);
+    const limit = M.levelLimit(mode, state), shown = M.visible(result, limit);
+    const endpoint = M.boundary(mode, p, j, state);
     const conclusion = mode === 'comparison' ? 'Comparison is an isomorphism' : 'Vanishing is predicted';
     let detail;
     switch (result.reason) {
       case 'dimension': detail = `Both groups vanish automatically: p = ${p} > n = ${state.d}.`; break;
       case 'weight-zero': detail = 'Weight 0: comparison holds without a singularity assumption.'; break;
-      case 'normal': detail = 'Normal + pre-0-Du Bois implies Du Bois. Proposition 3.1 gives comparison in every degree of weight 1.'; break;
+      case 'normal': detail = 'Normal + pre-0-Du Bois implies Du Bois. Proposition 4.1 gives comparison in every degree of weight 1.'; break;
       case 'lci-weight': detail = `For an lci variety with m-Du Bois singularities, j ≤ m + 1 gives comparison in every degree. Here j − 1 = ${j - 1}.`; break;
       case 'lci-codimension': detail = `The extra lci range applies: k = ${k} < n − s = ${state.d - state.s}. No additional Du Bois level is needed.`; break;
+      case 'lci-upper': detail = `Corollary 6.9 gives comparison for k ≥ j + n − m, equivalently p ≥ n − m. Here n − p = ${state.d - p}. This includes nonnormal lci Du Bois varieties; there is no p ≥ s + 2 restriction.`; break;
       case 'comparison': detail = `p = ${p} ≥ s + 2 = ${state.s + 2}, and min{j − 1, n − p} = min{${j - 1}, ${state.d - p}} = ${result.level}.`; break;
       case 'cdh':
       case 'mot': detail = `p = ${p} > j = ${j}, and min{j, n − p} = min{${j}, ${state.d - p}} = ${result.level}.`;
@@ -41,9 +43,18 @@
           : `For weights j ≥ 2, motivic vanishing also requires p ≥ s + 2 = ${state.s + 2}; here p = ${p}.`;
     }
     let status = result.level === -2 ? 'No assumption needed' : result.level < 0 ? 'No assertion from these ranges' : `Least sufficient m = ${result.level}`;
-    if (result.level > state.m) status += ` · beyond displayed m ≤ ${state.m}`;
-    const headline = result.level === -2 ? detail : result.level < 0 ? 'No conclusion is asserted for this cell.' : shown ? `${conclusion} at every m ≥ ${result.level}.` : `This cell would be colored at m ≥ ${result.level}.`;
-    return {result, shown, detail, status, headline};
+    const infeasible = mode === 'comparison' && state.lci && result.level > Math.floor((state.d - state.s - 1) / 2);
+    if (infeasible) status = 'No isomorphism assertion for these dimensions';
+    else if (result.level > limit) status += ` · beyond displayed m ≤ ${limit}`;
+    let headline = result.level === -2 ? detail : result.level < 0 ? 'No conclusion is asserted for this cell.' : shown ? `${conclusion} at every admissible m ≥ ${result.level}.` : `This cell would be colored at m ≥ ${result.level}.`;
+    if (infeasible) headline = `The sufficient level m = ${result.level} is incompatible with n − s ≥ 2m + 1 for a singular lci.`;
+    if (endpoint) {
+      status = endpoint === 'I' ? 'Injective boundary' : endpoint === 'S' ? 'Surjective boundary' : 'Injective and surjective';
+      headline = 'Corollary 6.9 gives the indicated boundary guarantee; the fill remains reserved for the isomorphism ranges.';
+      detail = endpoint.includes('I') ? `Injective at k = n − s = ${k}, already for m = 0. ` : '';
+      if (endpoint.includes('S')) detail += `Surjective at k = j + n − m − 1 = ${k} for m = ${state.d - p - 1}.`;
+    }
+    return {result, shown, endpoint, detail, status, headline};
   }
 
   function chart(mode, id) {
@@ -55,7 +66,7 @@
     for (let j = 0; j < rows; j++) {
       labels += `<text x="${left - 11}" y="${top + (j + .5) * unit + 4}" text-anchor="end">${j === 0 ? 0 : '−' + j}</text>`;
       for (let p = 0; p < columns; p++) {
-        const result = M.cell(mode, p, j, state), shown = M.visible(result, state.m);
+        const result = M.cell(mode, p, j, state), shown = M.visible(result, M.levelLimit(mode, state));
         const fill = !shown ? '#fffefa' : result.level === -2 ? '#E4E9ED' : color(result.level);
         const x = left + p * unit, y = top + j * unit;
         const details = describe(mode, p, j);
@@ -64,6 +75,7 @@
         const label = `H^${p + j}(${j}), p=${p}, q=${-j}. ${details.status}. ${details.detail}`;
         cells += `<rect x="${x}" y="${y}" width="${unit}" height="${unit}" fill="${fill}" stroke="#c6c9bf" stroke-width=".6"/>`;
         if (shown && result.hatched) cells += `<rect x="${x}" y="${y}" width="${unit}" height="${unit}" fill="url(#hatch-${id})"/>`;
+        if (details.endpoint) cells += `<text x="${x + unit - 5}" y="${y + 12}" text-anchor="end" font-family="sans-serif" font-size="10" font-weight="600" fill="#254b40">${details.endpoint}</text>`;
         outlines += `<g class="cell${current ? ' selected' : ''}" role="button" tabindex="${tabbable ? 0 : -1}" data-p="${p}" data-j="${j}" data-chart="${id}" aria-label="${escape(label)}"><title>${escape(label)}</title><rect class="cell-outline" x="${x + 1.5}" y="${y + 1.5}" width="${unit - 3}" height="${unit - 3}" fill="transparent" stroke="transparent" rx="1"/><text x="${x + unit / 2}" y="${y + unit / 2 + 5}" text-anchor="middle" font-size="15" fill="#29342e" pointer-events="none"${p === j ? ` paint-order="stroke" stroke="${fill}" stroke-width="3" stroke-linejoin="round"` : ''}><tspan font-style="italic">H</tspan><tspan baseline-shift="super" font-size="10">${p + j}</tspan><tspan>(${j})</tspan></text></g>`;
       }
     }
@@ -75,6 +87,8 @@
   function rules() {
     const hypothesis = `${state.normal ? String.raw`\text{normal, }` : ''}${state.lci ? String.raw`\text{lci, }m\text{-DB}` : String.raw`\text{pre-}m\text{-DB}`}`;
     $('comparison-equation').innerHTML = tex(String.raw`${hypothesis} \;\Longrightarrow\; H^{k}_{\mathrm{mot}}(X,\mathbb{Z}(j)) = H^{k}_{\mathrm{cdh}}(X,\mathbb{Z}(j))`);
+    $('lci-rules').hidden = !state.lci;
+    $('comparison-boundary-legend').hidden = !state.lci;
   }
 
   function showDetail(id, p, j, pin = false) {
@@ -115,13 +129,18 @@
       button.disabled = normalized[key] === state[key];
     });
     rules();
+    const motivicImpossible = state.s > state.d - 2;
+    if (motivicImpossible && selected?.id === 'motivic') selected = null;
+    $('motivic-feasibility').hidden = !motivicImpossible;
+    $('motivic-chart').parentElement.hidden = motivicImpossible;
+    $('motivic-caption').hidden = motivicImpossible;
     for (const [id, mode] of FIGURES) {
-      $(id + '-chart').innerHTML = chart(mode, id);
+      $(id + '-chart').innerHTML = id === 'motivic' && motivicImpossible ? '' : chart(mode, id);
       $(id + '-chart').style.minWidth = `${(state.d + 1 + Number(state.automatic)) * 42 + 42}px`;
     }
-    let legend = '';
-    for (let m = 0; m <= state.m; m++) legend += `<span class="legend-item"><i style="background:${color(m)}"></i>m = ${m}</span>`;
-    for (const [id] of FIGURES) {
+    for (const [id, mode] of FIGURES) {
+      let legend = '';
+      for (let m = 0; m <= M.levelLimit(mode, state); m++) legend += `<span class="legend-item"><i style="background:${color(m)}"></i>m = ${m}</span>`;
       $(id + '-legend').innerHTML = legend + '<span class="legend-item"><i style="background:#E4E9ED"></i>no assumption</span><span class="legend-item"><i style="background:#fffefa"></i>no assertion</span>';
     }
     for (const [id] of FIGURES) {
@@ -129,6 +148,7 @@
       $(id + '-inspect').textContent = 'A closer look';
       $(id + '-detail').textContent = 'Hover, focus, or select a cell to see its degree, weight, and exact condition. Arrow keys move around the grid.';
     }
+    if (motivicImpossible) $('motivic-detail').textContent = 'The normality hypothesis requires s ≤ n − 2. These parameters are available in the comparison panel for nonnormal varieties.';
     if (selected) showDetail(selected.id, selected.p, selected.j);
     if (updateHash) {
       try {history.replaceState(null, '', '#' + M.toHash(state));} catch { /* file:// still works without history support. */ }
@@ -189,13 +209,13 @@
     svg.setAttribute('y', '63'); svg.setAttribute('width', width); svg.setAttribute('height', height);
     svg.querySelectorAll('.cell-outline').forEach(el => el.remove()); wrapper.append(svg);
     let x = 22, y = height + 86;
-    for (let m = 0; m <= Math.min(state.m, state.d); m++) {
+    for (let m = 0; m <= Math.min(M.levelLimit(modeOf(id), state), state.d); m++) {
       if (x > width - 80) {x = 22; y += 23;}
       const rect = document.createElementNS(ns, 'rect'); for (const [name, value] of Object.entries({x, y: y - 11, width: 12, height: 12, fill: color(m)})) rect.setAttribute(name, value); wrapper.append(rect); addText(`m = ${m}`, x + 18, y); x += 72;
     }
     addText('Gray: no assumption. White: no assertion at these levels.', 22, y + 23, 10);
     addText('Dashed: k = 2j. Colors show the least sufficient m.', 22, y + 41, 10);
-    addText(id === 'comparison' ? `${state.normal ? 'normal, ' : ''}${state.lci ? 'lci, m-DB' : 'pre-m-DB'}` : id === 'motivic' ? 'Normal projective, pre-m-rational · Conjecture 3.10' : 'D_m · Conjecture G(iii); weight-2 hatching: isolated klt only.', 22, y + 59, 10);
+    addText(id === 'comparison' ? `${state.normal ? 'normal, ' : ''}${state.lci ? 'lci, m-DB · Corollary 6.9; I: injective, S: surjective.' : 'pre-m-DB · Corollary 6.8'}` : id === 'motivic' ? 'Normal projective, pre-m-rational · Conjecture B + weight-one comparison' : 'D_m · Conjecture G(iii); weight-2 hatching: isolated klt only.', 22, y + 59, 10);
     const data = new XMLSerializer().serializeToString(wrapper), url = URL.createObjectURL(new Blob([data], {type: 'image/svg+xml'}));
     const link = document.createElement('a'); link.href = url; link.download = `${SLUG[id]}-n${state.d}-s${state.s}-m${state.m}.svg`; document.body.append(link); link.click(); link.remove(); setTimeout(() => URL.revokeObjectURL(url), 1000);
     $('status').textContent = 'Diagram downloaded as SVG.';

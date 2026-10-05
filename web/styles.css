@@ -2,6 +2,7 @@
 
 /* base */
 *{box-sizing:border-box}
+[hidden]{display:none!important}
 body{margin:0;color:var(--ink);background:var(--paper);font-family:var(--sans);font-size:14px;line-height:1.5}
 button,input,select{font:inherit}
 button,a,input,select,summary{-webkit-tap-highlight-color:transparent}

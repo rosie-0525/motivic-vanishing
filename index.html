@@ -48,11 +48,11 @@
         <section class="notebook notebook-right" aria-labelledby="s2-title">
           <div class="notebook-intro">
           <h2 id="s2-title"><span class="section-number">2</span>cdh = motivic for higher Du Bois singularities</h2>
-          <p>We will prove the following comparison statement. If <span data-tex="X"></span> has pre-<span data-tex="m"></span>-Du Bois singularities and its singular locus has dimension <span data-tex="s"></span>, then the canonical map is an isomorphism</p>
+          <p>Corollary 6.8 of the current manuscript proves the following comparison statement. If <span data-tex="X"></span> has pre-<span data-tex="m"></span>-Du Bois singularities and its singular locus has dimension <span data-tex="s"></span>, then in positive weight the canonical map is an isomorphism</p>
           <p class="display-math" data-tex-display="H^{k}_{\mathrm{mot}}\bigl(X,\mathbb{Z}(j)\bigr) \;\xrightarrow{\;\sim\;}\; H^{k}_{\mathrm{cdh}}\bigl(X,\mathbb{Z}(j)\bigr) \qquad \text{for } \; k-j \;\ge\; s+2 \; \text{ and } \; m \;\ge\; \min\bigl\{\,j-1,\; n-k+j\,\bigr\}."></p>
           <p>As in section 1, in the following diagram, the cdh/motivic cohomology <span data-tex="H^{k}(j)"></span> is displayed according to the standard indexing in the Atiyah–Hirzebruch spectral sequence. So the columns are <span data-tex="p = k-j"></span> and the rows are <span data-tex="q = -j"></span>. For illustration we take <span id="comparison-dimension-live"></span>.</p>
           <p>The new comparison theorem shows that pre-<span data-tex="m"></span>-Du Bois singularities imply agreement between <span data-tex="H^{k}_{\mathrm{cdh}}\bigl(X,\mathbb{Z}(j)\bigr)"></span> and <span data-tex="H^{k}_{\mathrm{mot}}\bigl(X,\mathbb{Z}(j)\bigr)"></span> in every cell colored by <span data-tex="m"></span>; the colors are cumulative, so agreement in a cell of level <span data-tex="m' \le m"></span> also holds under the pre-<span data-tex="m"></span>-Du Bois assumption.</p>
-          <p>Improvements are possible if we in addition assume <span data-tex="X"></span> is normal, or <span data-tex="m"></span>-Du Bois local complete intersection.</p>
+          <p>Normality gives comparison in every degree of weight one. For a pure-dimensional local complete intersection with <span data-tex="m"></span>-Du Bois singularities, Corollary 6.9 also gives comparison in all weights below <span data-tex="k=n-s"></span> and above <span data-tex="k=j+n-m-1"></span>, including the nonnormal case.</p>
 
           </div>
           <div class="notebook-diagrams">
@@ -67,7 +67,12 @@
               <button class="opt-reset" data-reset type="button" aria-label="Reset parameters" title="Reset parameters">↺</button>
             </div>
             <div class="chart-scroll"><div id="comparison-chart" class="chart"></div></div>
-            <figcaption class="chart-caption"><span><span class="proved-dot" aria-hidden="true"></span> All colored cells are proved cases</span><div class="legend-swatches" id="comparison-legend" aria-label="Color code"></div></figcaption>
+            <figcaption class="chart-caption"><span><span class="proved-dot" aria-hidden="true"></span> Colored cells: proved isomorphisms</span><span id="comparison-boundary-legend" hidden>I: injective · S: surjective, at a displayed level</span><div class="legend-swatches" id="comparison-legend" aria-label="Color code"></div></figcaption>
+            <div class="rule-block" id="lci-rules" hidden>
+              <p class="rule-title">Corollary 6.9 · lci with m-Du Bois singularities</p>
+              <p class="formula" data-tex="j\le m+1\quad\text{or}\quad k<n-s\quad\text{or}\quad p\ge n-m"></p>
+              <p>For <span data-tex="j\ge m+2"></span>: injective at <span data-tex="k=n-s"></span>; surjective at <span data-tex="p=n-m-1"></span>. White cells with I or S carry only the indicated guarantee.</p>
+            </div>
           </figure>
           <div class="cell-inspector"><div class="inspect-icon" aria-hidden="true">⌖</div><div><h3 id="comparison-inspect">A closer look</h3><div id="comparison-detail" class="detail" aria-live="polite">Hover, focus, or select a cell to see its degree, weight, and exact condition. Arrow keys move around the grid.</div></div></div>
           </div>
@@ -80,15 +85,16 @@
           <p class="display-math" data-tex-display="H^{k}_{\mathrm{mot}}\bigl(X,\mathbb{Q}(j)\bigr) \;=\; 0 \qquad \text{for } \; k > 2j, \;\; m \;\ge\; \min\bigl\{\,j,\; n-p\,\bigr\}, \;\text{ and }\; j \le 1 \;\text{ or }\; p \ge s+2."></p>
 
           <figure class="diagram-card" id="motivic-card" aria-labelledby="motivic-title">
-            <header class="card-header"><div class="card-kicker"><span class="figure-number">03</span><span>CONJECTURE 3.10</span></div><h3 id="motivic-title">Motivic vanishing</h3><div class="equation" data-tex="\text{normal, projective, pre-}m\text{-rational} \;\Longrightarrow\; H^{k}_{\mathrm{mot}}\bigl(X,\mathbb{Q}(j)\bigr) = 0"></div></header>
+            <header class="card-header"><div class="card-kicker"><span class="figure-number">03</span><span>CONJECTURE B + WEIGHT-ONE COMPARISON</span></div><h3 id="motivic-title">Motivic vanishing</h3><div class="equation" data-tex="\text{normal, projective, pre-}m\text{-rational} \;\Longrightarrow\; H^{k}_{\mathrm{mot}}\bigl(X,\mathbb{Q}(j)\bigr) = 0"></div></header>
             <div class="figure-options" role="group" aria-label="Parameters for the motivic vanishing diagram">
               <div class="opt"><label class="opt-label" for="motivic-dimension"><span data-tex="n"></span></label><div class="stepper"><button data-step="d:-1" aria-label="Decrease dimension">−</button><input id="motivic-dimension" data-control="d" type="number" min="1" max="24" value="6" inputmode="numeric" aria-label="Dimension n"><button data-step="d:1" aria-label="Increase dimension">+</button></div></div>
               <div class="opt"><label class="opt-label" for="motivic-singular"><span data-tex="s"></span></label><div class="stepper"><button data-step="s:-1" aria-label="Decrease singular locus dimension">−</button><input id="motivic-singular" data-control="s" type="number" min="0" max="5" value="0" inputmode="numeric" aria-label="Dimension s of the singular locus"><button data-step="s:1" aria-label="Increase singular locus dimension">+</button></div></div>
               <div class="opt opt-level"><label class="opt-label" for="motivic-level"><output data-level-value></output></label><input id="motivic-level" data-control="m" type="range" min="0" max="6" value="2" aria-label="Show levels through m"></div>
               <button class="opt-reset" data-reset type="button" aria-label="Reset parameters" title="Reset parameters">↺</button>
             </div>
+            <div class="rule-block" id="motivic-feasibility" hidden>A singular normal variety requires <span data-tex="s\le n-2"></span>. Reduce <span data-tex="s"></span> to display this diagram; the comparison panel also allows nonnormal varieties.</div>
             <div class="chart-scroll"><div id="motivic-chart" class="chart"></div></div>
-            <figcaption class="chart-caption"><span><span class="hatch-swatch" aria-hidden="true"></span> Proved low-weight cases</span><div class="legend-swatches" id="motivic-legend" aria-label="Color code"></div></figcaption>
+            <figcaption class="chart-caption" id="motivic-caption"><span><span class="hatch-swatch" aria-hidden="true"></span> Proved low-weight cases</span><div class="legend-swatches" id="motivic-legend" aria-label="Color code"></div></figcaption>
           </figure>
           <div class="cell-inspector"><div class="inspect-icon" aria-hidden="true">⌖</div><div><h3 id="motivic-inspect">A closer look</h3><div id="motivic-detail" class="detail" aria-live="polite">Hover, focus, or select a cell to see its degree, weight, and exact condition. Arrow keys move around the grid.</div></div></div>
         </section>
