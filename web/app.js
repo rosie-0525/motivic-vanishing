@@ -87,7 +87,11 @@
   function rules() {
     const hypothesis = `${state.normal ? String.raw`\text{normal, }` : ''}${state.lci ? String.raw`\text{lci, }m\text{-DB}` : String.raw`\text{pre-}m\text{-DB}`}`;
     $('comparison-equation').innerHTML = tex(String.raw`${hypothesis} \;\Longrightarrow\; H^{k}_{\mathrm{mot}}(X,\mathbb{Z}(j)) = H^{k}_{\mathrm{cdh}}(X,\mathbb{Z}(j))`);
+    $('comparison-rules').hidden = state.lci;
     $('lci-rules').hidden = !state.lci;
+    $('comparison-normal-hypothesis').hidden = !state.normal;
+    $('comparison-normal-conclusion').hidden = !state.normal;
+    $('lci-normal-hypothesis').hidden = !state.normal;
     $('comparison-boundary-legend').hidden = !state.lci;
   }
 

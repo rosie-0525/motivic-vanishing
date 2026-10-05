@@ -39,6 +39,14 @@
             </div>
             <div class="chart-scroll"><div id="vanishing-chart" class="chart"></div></div>
             <figcaption class="chart-caption"><span><span class="hatch-swatch" aria-hidden="true"></span> Proved cases in the reference</span><div class="legend-swatches" id="vanishing-legend" aria-label="Color code"></div></figcaption>
+            <div class="rule-block" id="vanishing-rules">
+              <p class="rule-title">Math statement</p>
+              <p>Let <span data-tex="X"></span> be a normal complex projective variety of dimension <span data-tex="n"></span> satisfying <span data-tex="D_m"></span>, where <span data-tex="m\ge0"></span> is an integer. For integers <span data-tex="j\ge0"></span> and <span data-tex="k\in\mathbb{Z}"></span>, it is conjectured that</p>
+              <p class="formula" data-tex-display="H^k_{\mathrm{cdh}}\bigl(X,\mathbb{Q}(j)\bigr)=0"></p>
+              <p>whenever</p>
+              <p class="formula" data-tex-display="k>2j\quad\text{and}\quad m\ge\min\{j,n-k+j\}."></p>
+              <p>In particular, the conjecture applies when <span data-tex="X"></span> has pre-<span data-tex="m"></span>-rational singularities. Independently of the condition <span data-tex="D_m"></span>, one has <span data-tex="H^k_{\mathrm{cdh}}(X,\mathbb{Z}(j))=0"></span> for <span data-tex="k>n+j"></span>.</p>
+            </div>
           </figure>
           <div class="cell-inspector"><div class="inspect-icon" aria-hidden="true">⌖</div><div><h3 id="vanishing-inspect">A closer look</h3><div id="vanishing-detail" class="detail" aria-live="polite">Hover, focus, or select a cell to see its degree, weight, and exact condition. Arrow keys move around the grid.</div></div></div>
 
@@ -68,9 +76,21 @@
             </div>
             <div class="chart-scroll"><div id="comparison-chart" class="chart"></div></div>
             <figcaption class="chart-caption"><span><span class="proved-dot" aria-hidden="true"></span> Colored cells: proved isomorphisms</span><span id="comparison-boundary-legend" hidden>I: injective · S: surjective, at a displayed level</span><div class="legend-swatches" id="comparison-legend" aria-label="Color code"></div></figcaption>
+            <div class="rule-block" id="comparison-rules">
+              <p class="rule-title">Math statement</p>
+              <p>Let <span data-tex="X"></span> be a <span id="comparison-normal-hypothesis" hidden>normal </span>complex variety of dimension <span data-tex="n"></span> with pre-<span data-tex="m"></span>-Du Bois singularities, where <span data-tex="m\ge0"></span> is an integer. If <span data-tex="X"></span> is smooth, the motivic-to-cdh comparison is an isomorphism in every degree and weight. Otherwise, put <span data-tex="s=\dim X_{\mathrm{sing}}"></span>. For every integer <span data-tex="j\ge0"></span>, the natural map</p>
+              <p class="formula" data-tex-display="H^k_{\mathrm{mot}}\bigl(X,\mathbb{Z}(j)\bigr)\longrightarrow H^k_{\mathrm{cdh}}\bigl(X,\mathbb{Z}(j)\bigr)"></p>
+              <p>is an isomorphism in each of the following ranges:</p>
+              <ol type="i">
+                <li>all <span data-tex="k\in\mathbb{Z}"></span>, if <span data-tex="j=0"></span>;</li>
+                <li><span data-tex="k\ge j+s+2"></span>, if <span data-tex="1\le j\le m+1"></span>;</li>
+                <li><span data-tex="k\ge\max\{j+s+2,j+n-m\}"></span>, if <span data-tex="j\ge m+2"></span>.</li>
+              </ol>
+              <p id="comparison-normal-conclusion" hidden>Moreover, normality and the pre-<span data-tex="0"></span>-Du Bois condition imply that <span data-tex="X"></span> has Du Bois singularities. Hence the comparison map is also an isomorphism for every <span data-tex="k\in\mathbb{Z}"></span> when <span data-tex="j=1"></span>.</p>
+            </div>
             <div class="rule-block" id="lci-rules" hidden>
               <p class="rule-title">Math statement</p>
-              <p>Let <span data-tex="X"></span> be a complex local complete intersection variety of pure dimension <span data-tex="n"></span> with <span data-tex="m"></span>-Du Bois singularities, where <span data-tex="m\ge0"></span> is an integer. If <span data-tex="X"></span> is smooth, the motivic-to-cdh comparison is an isomorphism in every degree and weight. Otherwise, put <span data-tex="s=\dim X_{\mathrm{sing}}"></span>. For every integer <span data-tex="j\ge0"></span>, the natural map</p>
+              <p>Let <span data-tex="X"></span> be a <span id="lci-normal-hypothesis" hidden>normal </span>complex local complete intersection variety of pure dimension <span data-tex="n"></span> with <span data-tex="m"></span>-Du Bois singularities, where <span data-tex="m\ge0"></span> is an integer. If <span data-tex="X"></span> is smooth, the motivic-to-cdh comparison is an isomorphism in every degree and weight. Otherwise, put <span data-tex="s=\dim X_{\mathrm{sing}}"></span>. For every integer <span data-tex="j\ge0"></span>, the natural map</p>
               <p class="formula" data-tex-display="H^k_{\mathrm{mot}}\bigl(X,\mathbb{Z}(j)\bigr)\longrightarrow H^k_{\mathrm{cdh}}\bigl(X,\mathbb{Z}(j)\bigr)"></p>
               <p>is an isomorphism in each of the following ranges:</p>
               <ol type="i">
@@ -102,6 +122,15 @@
             <div class="rule-block" id="motivic-feasibility" hidden>A singular normal variety requires <span data-tex="s\le n-2"></span>. Reduce <span data-tex="s"></span> to display this diagram; the comparison panel also allows nonnormal varieties.</div>
             <div class="chart-scroll"><div id="motivic-chart" class="chart"></div></div>
             <figcaption class="chart-caption" id="motivic-caption"><span><span class="hatch-swatch" aria-hidden="true"></span> Proved low-weight cases</span><div class="legend-swatches" id="motivic-legend" aria-label="Color code"></div></figcaption>
+            <div class="rule-block" id="motivic-rules">
+              <p class="rule-title">Math statement</p>
+              <p>Let <span data-tex="X"></span> be a normal complex projective variety of dimension <span data-tex="n"></span> with pre-<span data-tex="m"></span>-rational singularities, where <span data-tex="m\ge0"></span> is an integer. If <span data-tex="X"></span> is smooth, then <span data-tex="H^k_{\mathrm{mot}}(X,\mathbb{Q}(j))=0"></span> for every integer <span data-tex="j\ge0"></span> and <span data-tex="k>2j"></span>. Otherwise, put <span data-tex="s=\dim X_{\mathrm{sing}}"></span>. For integers <span data-tex="j\ge1"></span> and <span data-tex="k\in\mathbb{Z}"></span>, it is conjectured that</p>
+              <p class="formula" data-tex-display="H^k_{\mathrm{mot}}\bigl(X,\mathbb{Q}(j)\bigr)=0"></p>
+              <p>whenever</p>
+              <p class="formula" data-tex-display="\begin{gathered}k\ge\max\{2j+1,j+s+2\},\\m\ge\min\{j,n-k+j\}.\end{gathered}"></p>
+              <p>In weight zero, one has <span data-tex="H^k_{\mathrm{mot}}(X,\mathbb{Q}(0))=0"></span> for all <span data-tex="k>0"></span>. In weight one, one has <span data-tex="H^k_{\mathrm{mot}}(X,\mathbb{Q}(1))=0"></span> for <span data-tex="k>2"></span> provided <span data-tex="m\ge1"></span> or <span data-tex="k\ge n+1"></span>; these assertions are proved.</p>
+              <p>In every weight <span data-tex="j\ge0"></span>, one has <span data-tex="H^k_{\mathrm{mot}}(X,\mathbb{Z}(j))=0"></span> for <span data-tex="k>n+j"></span>, without any singularity assumption.</p>
+            </div>
           </figure>
           <div class="cell-inspector"><div class="inspect-icon" aria-hidden="true">⌖</div><div><h3 id="motivic-inspect">A closer look</h3><div id="motivic-detail" class="detail" aria-live="polite">Hover, focus, or select a cell to see its degree, weight, and exact condition. Arrow keys move around the grid.</div></div></div>
         </section>

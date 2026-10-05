@@ -109,6 +109,8 @@ main{max-width:1400px;margin:auto;padding:44px 44px 40px}
 .rule-block .subtle{font-size:10px;color:var(--muted)}
 .rule-block .subtle .katex{font-size:1.02em}
 .rule-block p{margin:4px 0 0}
+.rule-block ol{padding-left:24px;margin:8px 0;font-size:13px;line-height:1.85;color:#4c574f}
+.rule-block li+li{margin-top:4px}
 
 /* legend, inspector, notes */
 .legend-panel{grid-column:1/-1;display:flex;align-items:center;flex-wrap:wrap;gap:14px 24px;margin:0 0 24px;padding:16px 20px;background:#eeeee5;border:1px solid #e1e2d8;border-radius:7px}
