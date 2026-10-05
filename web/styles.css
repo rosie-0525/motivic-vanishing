@@ -104,7 +104,7 @@ main{max-width:1400px;margin:auto;padding:44px 44px 40px}
 .export-button:hover{color:var(--green);text-decoration:underline}
 .rule-block{padding:15px 22px 18px;border-top:1px solid #e8e9e0;background:#fafaf4;font-size:11px;line-height:1.7}
 .rule-block .rule-title{font-size:9px;letter-spacing:.7px;text-transform:uppercase;color:var(--muted);margin:0 0 5px}
-.rule-block .formula{line-height:1.75;margin:0 0 5px}
+.rule-block .formula{line-height:1.75;margin:0 0 5px;overflow-x:auto}
 .rule-block .formula .katex{font-size:1.16em;color:#31453a}
 .rule-block .subtle{font-size:10px;color:var(--muted)}
 .rule-block .subtle .katex{font-size:1.02em}

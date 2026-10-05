@@ -69,9 +69,16 @@
             <div class="chart-scroll"><div id="comparison-chart" class="chart"></div></div>
             <figcaption class="chart-caption"><span><span class="proved-dot" aria-hidden="true"></span> Colored cells: proved isomorphisms</span><span id="comparison-boundary-legend" hidden>I: injective · S: surjective, at a displayed level</span><div class="legend-swatches" id="comparison-legend" aria-label="Color code"></div></figcaption>
             <div class="rule-block" id="lci-rules" hidden>
-              <p class="rule-title">Corollary 6.9 · lci with m-Du Bois singularities</p>
-              <p class="formula" data-tex="j\le m+1\quad\text{or}\quad k<n-s\quad\text{or}\quad p\ge n-m"></p>
-              <p>For <span data-tex="j\ge m+2"></span>: injective at <span data-tex="k=n-s"></span>; surjective at <span data-tex="p=n-m-1"></span>. White cells with I or S carry only the indicated guarantee.</p>
+              <p class="rule-title">Math statement</p>
+              <p>Let <span data-tex="X"></span> be a complex local complete intersection variety of pure dimension <span data-tex="n"></span> with <span data-tex="m"></span>-Du Bois singularities, where <span data-tex="m\ge0"></span> is an integer. If <span data-tex="X"></span> is smooth, the motivic-to-cdh comparison is an isomorphism in every degree and weight. Otherwise, put <span data-tex="s=\dim X_{\mathrm{sing}}"></span>. For every integer <span data-tex="j\ge0"></span>, the natural map</p>
+              <p class="formula" data-tex-display="H^k_{\mathrm{mot}}\bigl(X,\mathbb{Z}(j)\bigr)\longrightarrow H^k_{\mathrm{cdh}}\bigl(X,\mathbb{Z}(j)\bigr)"></p>
+              <p>is an isomorphism in each of the following ranges:</p>
+              <ol type="i">
+                <li>all <span data-tex="k\in\mathbb{Z}"></span>, if <span data-tex="0\le j\le m+1"></span>;</li>
+                <li><span data-tex="k<n-s"></span>, in every weight;</li>
+                <li><span data-tex="k\ge j+n-m"></span>, in every weight.</li>
+              </ol>
+              <p>For <span data-tex="j\ge m+2"></span>, the comparison map is also injective at <span data-tex="k=n-s"></span> and surjective at <span data-tex="k=j+n-m-1"></span>.</p>
             </div>
           </figure>
           <div class="cell-inspector"><div class="inspect-icon" aria-hidden="true">⌖</div><div><h3 id="comparison-inspect">A closer look</h3><div id="comparison-detail" class="detail" aria-live="polite">Hover, focus, or select a cell to see its degree, weight, and exact condition. Arrow keys move around the grid.</div></div></div>
